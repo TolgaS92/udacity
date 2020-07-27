@@ -15,8 +15,9 @@ def valid_input(prompt, option1, option2):
         elif option2 in response:
             break
         else:
-            print_pause("sorry, I don't understand.")
-        return response
+            print_pause("sorry, I don't understand."
+                        "Please insert the right answer!")
+    return response
 
 
 def intro(enemie):
@@ -61,10 +62,10 @@ def house(enemie, items):
 
 def fight(enemie, items):
     print_pause("Would you like to (1) fight or (2) run away?")
-    fight = input(
-        "1\n"
-        "2\n")
-    if fight == '1':
+    response = valid_input(
+        "(Please enter '1' or '2').\n",
+        "1", "2")
+    if response == '1':
         if "tunnel" in items:
             print_pause("You feel a bit under-prepared for this, "
                         "what with only having a tiny dagger.")
@@ -92,7 +93,7 @@ def fight(enemie, items):
                             "You have been DEFEATED!\n")
                 play_again()
 
-    if fight == '2':
+    if response == '2':
         print_pause("You run back into the field. Luckily, you don't seem"
                     "to have been followed.")
         field(enemie, items)
@@ -101,15 +102,16 @@ def fight(enemie, items):
 def field(enemie, items):
     print_pause("Enter 1 to knock on the door of the house.\n"
                 "Enter 2 to peer into the cave.\n"
-                "What would you like to do?\n"
-                "(Please enter 1 or 2). \n")
-    enter = input(
-        "1\n"
-        "2\n")
-    if enter == '1':
+                "What would you like to do?\n")
+    response = valid_input(
+        "(Please enter '1' or '2').\n",
+        "1", "2")
+    if response == '1':
         house(enemie, items)
-    elif enter == '2':
+    elif response == '2':
         cave(enemie, items)
+    else:
+        play_again()
 
 
 def play_game():
@@ -121,9 +123,10 @@ def play_game():
 
 
 def play_again():
-    response = input(
+    response = valid_input(
         "Would you like to play again?\n"
-        "Please Enter \"yes\" or \"no\".\n").lower()
+        "Please Enter 'yes' or 'no'.\n",
+        "yes", "no")
     if response == "yes":
         play_game()
     if response == "no":
@@ -131,5 +134,6 @@ def play_again():
 
 
 play_game()
+
 
 play_again()
